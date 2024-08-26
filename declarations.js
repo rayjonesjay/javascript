@@ -1,4 +1,5 @@
-const escapeStr = "`\\/'";
+const escapeStr = "`\\/\"'";
+console.log(escapeStr)
 const arr = Object.freeze([4, "2"]);
 const obj = Object.freeze({
   str: "I am the best",
