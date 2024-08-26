@@ -7,5 +7,5 @@ function last(arrString){
 function kiss(arrString){
     let firstElement = first(arrString);
     let lastElement = last(arrString);
-    return [firstElement, lastElement] ;
+    return [lastElement, firstElement] ;
 }
