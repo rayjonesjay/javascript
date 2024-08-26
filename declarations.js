@@ -8,7 +8,7 @@ const obj = Object.freeze({
   undef: undefined,
 });
 const nested = {
-  arr: Object.freeze([3, 4, undefined, "2"]),
+  arr: Object.freeze([4, undefined, "2"]),
   obj: Object.freeze({
     str: "Father time",
     num: 33,
