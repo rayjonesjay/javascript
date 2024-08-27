@@ -3,7 +3,7 @@ function words(str) {
     let tmp = ""
     for (let i = 0; i < str.length; i++){
         if (str[i] === ' '){
-            if (tmp !== ""){
+            if (tmp !== "" || result.length > 0){
                 result.push(tmp);
                 tmp = ""
             }
@@ -17,8 +17,6 @@ function words(str) {
     return result
 }
 
-// let arr = "hello world this is new"
-// console.log(words(arr));
 function sentence(arr) {
     let res = ""
     for(let i = 0; i < arr.length; i++){
