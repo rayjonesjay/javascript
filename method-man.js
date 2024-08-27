@@ -3,23 +3,22 @@ function words(str) {
     let tmp = ""
     for (let i = 0; i < str.length; i++){
         if (str[i] === ' '){
-            if (isEmpty(tmp)){
+            if (tmp !== ""){
                 result.push(tmp);
+                tmp = ""
             }
         }else{
             tmp += str[i];
         }
     }
+    if (tmp !== ""){
+        result.push(tmp);
+    }
     return result
 }
-function isEmpty(str) {
-    for(let i = 0; i < str.length; i++){
-        if (str[i] !== ' '){
-            return false
-        }
-    }
-    return true
-}
+
+// let arr = "hello world this is new"
+// console.log(words(arr));
 function sentence(arr) {
     let res = ""
     for(let i = 0; i < arr.length; i++){
@@ -37,7 +36,7 @@ function capitalize(str) {
         if (i === 0){
             res += str[i].toUpperCase();
         }else{
-            res += str[i];
+            res += str[i].toLowerCase();
         }
     }
     return res
