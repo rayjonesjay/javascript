@@ -29,7 +29,7 @@ function sentence(arr) {
     return res
 }
 function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 function yell(str) {
     return str.toUpperCase();
