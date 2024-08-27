@@ -29,35 +29,11 @@ function sentence(arr) {
     return res
 }
 function capitalize(str) {
-    let res = ""
-    for (let i = 0; i < str.length; i++){
-        if (i === 0){
-            res += str[i].toUpperCase();
-        }else{
-            res += str[i].toLowerCase();
-        }
-    }
-    return res
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 function yell(str) {
-    let res = ""
-    for (let i = 0; i < str.length; i++){
-        if(str[i] >= 'a' && str[i] <= 'z'){
-            res += str[i].toUpperCase();
-        }else{
-            res += String(str[i])
-        }
-    }
-    return res
+    return str.toUpperCase();
 }
 function whisper(str) {
-    let res = ""
-    for (let i = 0; i < str.length; i++){
-        if(str[i] >= 'A' && str[i] <= 'Z'){
-            res += str[i].toLowerCase();
-        }else{
-            res += String(str[i])
-        }
-    }
-    return "*"+res+"*"
+    return "*"+str.toLowerCase()+"*"
 }
