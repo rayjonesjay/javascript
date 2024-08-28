@@ -38,7 +38,7 @@ function arrToObj(arr){
 function strToObj(str) {
   let ob = {}
   for (let i = 0; i < str.length; i++){
-    ob.i = str[i]
+    ob[i] = str[i]
   }
   return ob
 }
