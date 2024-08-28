@@ -1,4 +1,4 @@
-function div(a,b){
+function divide(a,b){
   let res = 0
   while(a >= b){
     res++
@@ -6,7 +6,7 @@ function div(a,b){
   }
   return res
 }
-function mul(a,b){
+function multiply(a,b){
   let res = 0
   let isNeg = false
   if (b < 0){
@@ -18,7 +18,7 @@ function mul(a,b){
   }
   return isNeg ? -res : res
 }
-function mod(a,b){
+function modulo(a,b){
   if (b===0){
     throw new Error("Error Division by zero")
   }
