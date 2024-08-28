@@ -23,7 +23,11 @@ function mapToObj(mp){
   return Object.fromEntries(mp)
 }
 function objToArr(obj){
-  return Object.entries(obj)
+  let arr = []
+  for (let k in obj){
+    arr.push(obj[k])
+  }
+  return arr
 }
 function objToMap(obj){
   return new Map(Object.entries(obj))
