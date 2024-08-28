@@ -36,7 +36,11 @@ function arrToObj(arr){
   return Object.assign({}, arr)
 }
 function strToObj(str) {
-  return Object.assign(str.split(''))
+  let ob = {}
+  for (let i = 0; i < str.length; i++){
+    ob.i = str[i]
+  }
+  return ob
 }
 function superTypeOf(u) {
   if (u === null) {
