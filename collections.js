@@ -31,6 +31,9 @@ function objToMap(obj){
 function arrToObj(arr){
   return Object.assign({}, arr)
 }
+function strToObj(str) {
+  return Object.assign(str.split(''))
+}
 function superTypeOf(u) {
   if (u === null) {
     return "null";
