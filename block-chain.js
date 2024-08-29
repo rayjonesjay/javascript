@@ -4,7 +4,7 @@ function blockChain(data, prev = {index:0,hash:'0'}){
   const index = prev.index+1;
 
   // compute the hash using the provided function
-  const hash = hashcode(index + prev.hash + JSON.stringify(data));
+  const hash = hashCode(index + prev.hash + JSON.stringify(data));
 
   // create the new block
   const newBlock = {
