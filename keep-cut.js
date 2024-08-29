@@ -44,10 +44,10 @@ function keepLast(str){
 function keepFirstLast(s){
  return keepFirst(s) + keepLast(s)
 }
-let s = "ab"
-console.log(cutFirst(s))
-console.log(cutLast(s));
-console.log(cutFirstLast(s))
-console.log(keepFirst(s))
-console.log(keepLast(s))
-console.log(keepFirstLast(s))
+// let s = "ab"
+// console.log(cutFirst(s))
+// console.log(cutLast(s));
+// console.log(cutFirstLast(s))
+// console.log(keepFirst(s))
+// console.log(keepLast(s))
+// console.log(keepFirstLast(s))
