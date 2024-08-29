@@ -6,12 +6,11 @@ function slice(seq,start=0,optional=seq.length){
     isArr = true
   }
   if (typeof seq === 'string'){
+    seq = seq.split('')
+    console.log(seq)
     isStr=true
   }
-  // seq means sequence
-  if (optional<start){
-    return []
-  }
+
   if(start < 0){
     start = seq.length + start
     if (start<0){
@@ -23,6 +22,10 @@ function slice(seq,start=0,optional=seq.length){
     if (optional < 0){
       return []
     }
+  }
+  // seq means sequence
+  if (optional<start){
+    return []
   }
   if (optional >= seq.length){
     optional = seq.length
@@ -37,5 +40,5 @@ function slice(seq,start=0,optional=seq.length){
   return res
 }
 // let str = ["hello","world","golang","division","mangoes"]
-// console.log(slice('abcdef', 2))
+console.log(slice('abcdef', 0, -2))
 // console.log(slice(str,2))
