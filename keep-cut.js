@@ -31,7 +31,7 @@ function keepFirst(str){
 function keepLast(str){
   let res = ""
   let counter = 0
-  for(let i = str.length-2; i < str.length;i++){
+  for(let i = str.length-1; i >= 0;i--){
     if (counter < 2){
       res += str[i]
     }else {
@@ -39,15 +39,15 @@ function keepLast(str){
     }
     counter += 1
   }
-  return res
+  return res.split('').reverse().join('')
 }
 function keepFirstLast(s){
  return keepFirst(s) + keepLast(s)
 }
-// let s = "12456"
-// console.log(cutFirst(s))
-// console.log(cutLast(s));
-// console.log(cutFirstLast(s))
-// console.log(keepFirst(s))
-// console.log(keepLast(s))
-// console.log(keepFirstLast(s))
+let s = "ab"
+console.log(cutFirst(s))
+console.log(cutLast(s));
+console.log(cutFirstLast(s))
+console.log(keepFirst(s))
+console.log(keepLast(s))
+console.log(keepFirstLast(s))
