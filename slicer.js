@@ -36,6 +36,6 @@ function slice(seq,start=0,optional=seq.length){
   }
   return res
 }
-let str = ["hello","world","golang","division","mangoes"]
-console.log(slice('abcdef', 2))
-console.log(slice(str,2))
+// let str = ["hello","world","golang","division","mangoes"]
+// console.log(slice('abcdef', 2))
+// console.log(slice(str,2))
