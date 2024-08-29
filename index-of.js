@@ -1,9 +1,5 @@
 function indexOf(arr,val,optional=0){
-  let startIndex = 0
-  if (optional !== 0) {
-    startIndex = optional
-  }
-  for (let i = startIndex; i < arr.length;i++){
+  for (let i = optional; i < arr.length;i++){
     // if we find it
     if (arr[i] ===  val){
       return i
@@ -13,11 +9,7 @@ function indexOf(arr,val,optional=0){
   return -1
 }
 function lastIndexOf(arr,val,optional=arr.length-1){
-  let startIndex = arr.length-1
-  if (optional !== arr.length-1) {
-    startIndex = optional
-  }
-  for (let i = arr.length-1; i >= 0;i--){
+  for (let i = optional; i >= 0;i--){
     // if we find it
     if (arr[i] === val){
       return i
@@ -36,5 +28,8 @@ function includes(arr,val){
 }
 // let arr = [1,3,1,3,5,1,1,6,4]
 // let val = 50
-// let result = includes(arr,val)
+// let t = "sd"
+// arr =[t, 0, 0,0, t,0,0]
+// val=t
+//   let result = lastIndexOf(arr,val)
 // console.log("found at index:",result)
