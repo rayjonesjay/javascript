@@ -42,6 +42,9 @@ function keepLast(str){
   return res.split('').reverse().join('')
 }
 function keepFirstLast(s){
+  if(s.length<4){
+    return s
+  }
  return keepFirst(s) + keepLast(s)
 }
 // let s = "ab"
