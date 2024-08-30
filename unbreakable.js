@@ -5,10 +5,10 @@ function split(str, sep) {
   while (i < str.length) {
     // check if the current substring matches the separator
     if (str.slice(i, i + sep.length) === sep) {
-      if (t !== "") {
+      // if (t !== "") {
         res.push(t)
         t = "" // reset
-      }
+      // }
       i = i + sep.length // move the i pointer to the end of sep
     } else {
       t += str[i];//accumulate
@@ -43,3 +43,4 @@ function join(arr, bridge) {
 // let res = ["hello", "world", "this" , "is"]
 // // console.log(res)
 // console.log(split('a b c', ' '))
+// console.log(split('rrrr', 'rr'));
