@@ -1,5 +1,8 @@
 function split(str, sep) {
   let res = []
+  if (sep.length===0){
+    return [str]
+  }
   let t = ""
   let i = 0
   while (i < str.length) {
@@ -42,5 +45,5 @@ function join(arr, bridge) {
 // // let r = "hello world this , is my time to shine"
 // let res = ["hello", "world", "this" , "is"]
 // // console.log(res)
-// console.log(split('a b c', ' '))
+console.log(split('a b c', ''))
 // console.log(split('rrrr', 'rr'));
