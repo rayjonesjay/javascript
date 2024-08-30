@@ -12,8 +12,9 @@ function split(str, sep) {
       i = i + sep.length // move the i pointer to the end of sep
     } else {
       t += str[i];//accumulate
-      i++;
+      // i++;
     }
+    i++
     // i++ //-> you can also accumulate from here
   }
   // take care of the last round
