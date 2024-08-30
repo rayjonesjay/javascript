@@ -17,10 +17,10 @@ function split(str, sep) {
     // i++ //-> you can also accumulate from here
   }
   // take care of the last round
-  if (t !== "") {
+  // if (t !== "") {
     res.push(t)
-    t = ""
-  }
+    // t = ""
+  // }
   return res
 }
 
@@ -39,4 +39,4 @@ function join(arr, bridge) {
 // // let r = "hello world this , is my time to shine"
 // let res = ["hello", "world", "this" , "is"]
 // // console.log(res)
-// console.log(join(res, "-"))
+console.log(split('ee,ff,g,', ','))
