@@ -1,23 +1,42 @@
-function round(n) {
-  if (n >= 0) {
-    return (n - Math.floor(n) >= 0.5) ? Math.floor(n) + 1 : Math.floor(n);
+function trunc(num) {
+  if (num < 0) {
+    return -trunc(-num);
+  }
+  let result = 0;
+  let power = 1;
+  while (power * 10 <= num) {
+    power *= 10;
+  }
+  while (power >= 1) {
+    while (result + power <= num) {
+      result += power;
+    }
+    power /= 10;
+  }
+  return result;
+}
+function round(num) {
+  if (num < 0) {
+    return -trunc(-num + 0.5);
   } else {
-    return (n - Math.ceil(n) <= -0.5) ? Math.ceil(n) - 1 : Math.ceil(n);
+    return trunc(num + 0.5);
   }
 }
-function ceil(n) {
-  return (n > Math.floor(n)) ? Math.floor(n) + 1 : Math.floor(n);
-}
-function floor(n) {
-  return (n > Math.ceil(n)) ? Math.ceil(n) - 1 : Math.ceil(n);
-}
-function trunc(n) {
-  if (n === Infinity){
-    return Infinity
-  }else if (n === -Infinity){
-    return -Infinity
+function floor(num) {
+  if (num < 0 && num !== trunc(num)) {
+    return trunc(num) - 1;
   }
-  return (n >= 0) ? Math.floor(n) : Math.ceil(n);
+  return trunc(num);
+}
+function ceil(num) {
+  if (num < 0) {
+    return trunc(num);
+  } else {
+    if (num !== trunc(num)) {
+      return trunc(num) + 1;
+    }
+  }
+  return trunc(num);
 }
 // const nums = [3.7, -3.7, 3.1, -3.1]
 // console.log(nums.map(round))
