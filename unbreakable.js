@@ -39,4 +39,4 @@ function join(arr, bridge) {
 // // let r = "hello world this , is my time to shine"
 // let res = ["hello", "world", "this" , "is"]
 // // console.log(res)
-console.log(split('rrrr', 'rr'))
+// console.log(split('rrrr', 'rr'))
