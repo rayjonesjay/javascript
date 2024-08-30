@@ -3,7 +3,7 @@ function RNA(dna){
     'G':'C',
     'C':'G',
     'T':'A',
-    'A':'T',
+    'A':'U',
   }
   let res = ""
   for(let i = 0; i < dna.length;i++){
@@ -11,4 +11,18 @@ function RNA(dna){
   }
   return res
 }
-console.log(RNA("ATCG"))
+function DNA(rna){
+  const strand = {
+    'C':'G',
+    'G':'C',
+    'A':'T',
+    'U':'A',
+  }
+  let res = ""
+  for(let i = 0; i < rna.length;i++){
+    res += strand[rna[i]]
+  }
+  return res
+}
+// console.log(DNA("AUCG"))
+// console.log(RNA("TAGC"))
