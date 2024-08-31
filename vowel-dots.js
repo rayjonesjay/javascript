@@ -1,5 +1,7 @@
 function vowelDots(str){
   const pattern = /[aeiou]/gi
-  return str.replace(pattern, (match) => match+".")
+  let res = "";
+  res = str.replace(pattern, (match) => match + ".")
+  return res
 }
-console.log(vowelDots('a'))
+console.log(vowelDots('c'))
