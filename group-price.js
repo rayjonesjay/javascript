@@ -1,4 +1,4 @@
-const reg = /([A]+)(\d+)\.(\d+)/g;
+const reg =  /([^\d\s]+)(\d+)\.(\d+)/g;
 function groupPrice(str){
 let  match;
 const res = []
@@ -11,5 +11,5 @@ while((match = reg.exec(str)) !== null){
 }
 return res
 }
-// const str = "USD12.31  EU32.44"
-// console.log(groupPrice(str))
+const str = 'The price of the cereals is $4.00.'
+console.log(groupPrice(str))
