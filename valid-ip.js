@@ -13,13 +13,16 @@ function findIP(input) {
 
     // Validate IP address
     const ipParts = ip.split('.');
-    if (ipParts.length !== 4 || ipParts.some(part => part < 0 || part > 255)) {
+    if (ipParts.length !== 4 || ipParts.some(part => {
+      const num = Number(part);
+      return num < 0 || num > 255 || (part !== num.toString()); // Check for leading zeros
+    })) {
       continue;
     }
 
     // Validate port if present
     if (portStr) {
-      const port = parseInt(portStr);
+      const port = parseInt(portStr, 10);
       if (isNaN(port) || port < 0 || port > 65535) {
         continue;
       }
@@ -30,7 +33,8 @@ function findIP(input) {
 
   return validIPs;
 }
-// Example usage
-const exampleString = 'IP addresses are 192.168.0.1, 10.0.0.255:8080, and 172.16.254.1:65536. Invalid IPs are 256.256.256.256 and 192.168.01.1';
-console.log(findIP(exampleString));
-// Output: ["192.168.0.1", "10.0.0.255:8080"]
+//
+// // Example usage
+// const input = "http://127.0.0.1:8080 https://localhost:443 192.168.1.100 10.0.0.1:12345 127.0.0.1:65536";
+// const ips = findIP(input);
+// console.log("Valid IP addresses:", ips);
