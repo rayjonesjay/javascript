@@ -1,4 +1,4 @@
-// const dataSet = "qqq http://qqqqq q qqqqq https://something.com/hello qqqqqqq qhttp://example.com/hello?something=you&another=one";
+// const dataSet = "qqq http://qqqqq q qqqqq https://something.com/hello qqqqqqq qhttp://example.com/hello?something=youanother=one";
 // get all valid urls
 function getURL(dataSet){
   const urlREGEX = /https?:\/\/\S+/g; // match urls
@@ -28,12 +28,12 @@ function notSoGreedy(dataSet){
 
   const filtered = urls.filter(url => {
     // split the url in order to get the string before(scheme) and after ? which denotes start of query string
-    const [base, queryString] = url.split('?')
+    const [, queryString] = url.split('?')
     // if not query string was found then we return false to indicate that the url passed did not contain the query string
     if (!queryString) return false;
     // extract the query parameters which are separated by '&' symbols
-    const queryParameters = queryString.split('?')
-    return (queryParameters.length > 1) || (queryParameters.length <= 3);
+    const queryParameters = queryString.split('&')
+    return (queryParameters.length > 1 && queryParameters.length <= 3);
   })
 return filtered
 }
