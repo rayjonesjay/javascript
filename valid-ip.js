@@ -29,10 +29,7 @@ function findIP(input) {
   return validIPs;
 }
 
-// const input = "http://127.0.0.1:8080 https://localhost:443 192.168.1.100 10.0.0.1:12345 127.0.0.1:65536";
-// const ips = findIP(input);
-// console.log("Valid IP addresses:", ips);
-
-// const input = "http://127.0.0.1:8080 https://localhost:443 192.168.1.100 10.0.0.1:12345 127.0.0.1:65536";
-// const ips = findIP(input);
-// console.log("Valid IP addresses:", ips);
+// Example usage
+const input = "http://127.0.0.1:8080 https://localhost:443 192.168.1.100 10.0.0.1:12345 127.0.0.1:65536";
+const ips = findIP(input);
+console.log("Valid IP addresses:", ips);
