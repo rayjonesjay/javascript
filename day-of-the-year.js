@@ -1,22 +1,34 @@
+function isLeapYear(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+}
+
 function dayOfTheYear(date) {
     // Ensure the date is a valid Date object
     if (!(date instanceof Date) || isNaN(date)) {
         throw new Error('Invalid Date');
     }
 
-    // Get the year from the given date
+    // Extract the year, month, and day from the date
     const year = date.getFullYear();
+    const month = date.getMonth(); // 0-based index
+    const day = date.getDate();
 
-    // Create a Date object for January 1st of the given year
-    const startOfYear = new Date(year, 0, 1);
+    // Array to store the number of days in each month
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    // Calculate the difference in milliseconds between the given date and January 1st
-    const differenceInMillis = date.getTime() - startOfYear.getTime();
+    // Adjust for leap year
+    if (isLeapYear(year)) {
+        daysInMonth[1] = 29; // February has 29 days in a leap year
+    }
 
-    // Convert milliseconds to days
-    const millisecondsInADay = 1000 * 60 * 60 * 24;
-    const daysSinceStart = Math.floor(differenceInMillis / millisecondsInADay) + 1; // Add 1 to include the first day
+    // Calculate the number of days up to the given month
+    let daysUpToMonth = 0;
+    for (let i = 0; i < month; i++) {
+        daysUpToMonth += daysInMonth[i];
+    }
+
+    // Add the days in the current month
+    const daysSinceStart = daysUpToMonth + day;
 
     return daysSinceStart;
 }
-
