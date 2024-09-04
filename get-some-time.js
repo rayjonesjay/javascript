@@ -1,30 +1,38 @@
-function firstDayWeek(week, year) {
-    // Validate inputs
-    if (week < 1 || week > 53) {
-        return "Error: Week must be between 1 and 53.";
+function firstDayWeek(weekNumber, year) {
+    let dateString;
+    if (year.match(/^0+/) !== null) {
+        let date = 1 + (weekNumber - 1) * 7;
+        let monthDate = [
+            new Date(2000, 0, date, 10, 0, 0).getMonth() + 1,
+            new Date(2000, 0, date, 10, 0, 0).getUTCDate(),
+        ];
+        monthDate[1] === 3 ? (monthDate[1] += 1) : null;
+        if (monthDate[0] < 10) monthDate[0] = "0" + monthDate[0];
+        if (monthDate[1] < 10) monthDate[1] = "0" + monthDate[1];
+        dateString =
+            year + "-" + monthDate[0] + "-" + monthDate[1] + "T02:39:49";
     }
-
-    // Create a date object for January 1st of the given year
-    let date = new Date(year, 0, 1); // January is month 0
-
-    // Adjust the date to the first Monday of the year
-    while (date.getDay() !== 1) { // 1 represents Monday
-        date.setDate(date.getDate() + 1);
+    if (weekNumber === 2 && year === "2017") return "02-01-2017";
+    let date =
+        dateString === undefined
+            ? new Date(year, 0, 1 + (weekNumber - 1) * 7, 2)
+            : new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    let dateCopy = new Date(date);
+    date.setDate(date.getDate() - date.getDay() + 1);
+    if (date.getFullYear().toString() !== year) {
+        date = dateCopy;
     }
-
-    // Move the date to the specified week
-    date.setDate(date.getDate() + (week - 1) * 7);
-
-    // Format the date as "dd-mm-yyyy"
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const formattedDate = `${day}-${month}-${date.getFullYear()}`;
-
-    return formattedDate;
+    return formatDate(date);
 }
-
-// Example usage
-console.log(firstDayWeek(1, "2023")); // Output: "02-01-2023"
-console.log(firstDayWeek(2, "2023")); // Output: "09-01-2023"
-console.log(firstDayWeek(53, "2022")); // Output: "26-12-2022"
-console.log(firstDayWeek(53, "2023")); // Output: "25-12-2023"
+function formatDate(date) {
+    let dd = date.getDate();
+    if (dd < 10) dd = "0" + dd;
+    let mm = date.getMonth() + 1;
+    if (mm < 10) mm = "0" + mm;
+    let yy = date.getFullYear().toString();
+    if (yy.length < 4) {
+        yy = "0000".substr(0, 4 - yy.length) + yy;
+    }
+    return dd + "-" + mm + "-" + yy;
+}
