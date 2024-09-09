@@ -9,5 +9,6 @@ function invert(obj){
         array[1] = tmp;
         result.push(array);
     }
-    return arr
+    return Object.fromEntries(result)
 }
+console.log(invert({ language: 'english' }))
