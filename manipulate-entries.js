@@ -39,11 +39,11 @@ function reduceEntries(arr,callback,acc){
 function totalCalories(cart){
     return reduceEntries(cart, (acc, [item,grams]) => {
         if (nutritionDB[item]) {
-            const caloriesPer100g = nutritionDB[item].calories
-            const totalCaloriesForItem = (caloriesPer100g/100) * grams;
-            return Number((acc + totalCaloriesForItem)).toFixed(1);
+            const caloriesPer100g = parseFloat(nutritionDB[item].calories)
+            const totalCaloriesForItem = parseFloat((caloriesPer100g/100) * grams);
+            return parseFloat((acc + totalCaloriesForItem).toFixed(1));
         }
-        return acc.toFixed(1);
+        return parseFloat(acc.toFixed(1));
     },0);
 }
 
@@ -63,23 +63,30 @@ function cartTotal(cart) {
         if (nutritionDB[item]) {
             const nutrition = nutritionDB[item];
             return [item, {
-                calories: ((nutrition.calories / 100) * grams).toFixed(1),
-                protein: ((nutrition.protein / 100) * grams).toFixed(1),
-                carbs: ((nutrition.carbs / 100) * grams).toFixed(1),
-                sugar: ((nutrition.sugar / 100) * grams).toFixed(1),
-                fiber: ((nutrition.fiber / 100) * grams).toFixed(1),
-                fat: ((nutrition.fat / 100) * grams).toFixed(1),
+                calories: parseFloat(truncate(((nutrition.calories / 100) * grams).toFixed(3))),
+                protein: parseFloat(truncate(((nutrition.protein / 100) * grams).toFixed(3))),
+                carbs: parseFloat(truncate(((nutrition.carbs / 100) * grams).toFixed(3))),
+                sugar: parseFloat(truncate(((nutrition.sugar / 100) * grams).toFixed(3))),
+                fiber: parseFloat(truncate(((nutrition.fiber / 100) * grams).toFixed(3))),
+                fat: parseFloat(truncate(((nutrition.fat / 100) * grams).toFixed(3))),
             }];
         }
         return [item, null];
     });
 }
 
-const groceriesCart = { orange: 500, oil: 20, sugar: 480 }
+function truncate(numstr){
+    while(numstr.charAt(numstr.length-1) === '0') {
+        numstr = numstr.slice(0,numstr.length-1)
+    }
+    return numstr
+}
 
-console.log('Total calories:')
-console.log(totalCalories(groceriesCart))
-console.log('Items with low carbs:')
-console.log(lowCarbs(groceriesCart))
-console.log('Total cart nutritional facts:')
-console.log(cartTotal(groceriesCart))
+// const groceriesCart = { orange: 500, oil: 20, sugar: 480 }
+//
+// console.log('Total calories:')
+// console.log(totalCalories(groceriesCart))
+// console.log('Items with low carbs:')
+// console.log(lowCarbs(groceriesCart))
+// console.log('Total cart nutritional facts:')
+// console.log(cartTotal(groceriesCart))
