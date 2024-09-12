@@ -1,0 +1,26 @@
+// JAVASCRIPT CALLBACKS
+***********************
+a callback is a function passed as an argument to another function.
+a callback function can run after another function has finished.
+
+// FUNCTION SEQUENCE
+************************
+Javascript functions are executed in the sequence they are called. Not in the sequence they
+are defined.
+
+Example:
+```
+function a(){
+    console.log("hello")
+}
+function b(){
+    console.log("world")
+}
+b()
+a()
+
+// output: -> world
+           -> hello
+```
+
+// SEQUENCE CONTROL
