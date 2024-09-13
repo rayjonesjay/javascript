@@ -24,3 +24,27 @@ a()
 ```
 
 // SEQUENCE CONTROL
+
+
+
+// ASYNCHRONOUS
+
+functions running in parallel with other functions are called `asynchronous`.
+
+The AsyncFunction object provides methods for 'async functions'. in javascript every async function is
+actually an AsyncFunction object.
+
+// lodash _.debounce() Method
+This method is used to create a debounced function that delays a given function until after the started
+wait time in milliseconds has passed.
+
+What is _.debounce()
+
+The debounce method creates a debounced version of a function that will postpone its execution
+until after the specified wait time has elapsed since the last time it was invoked.
+
+KEY FEATURES OF DEBOUNCE:
+1.delay execution
+2.cancel and flush methods(debounce has a cancel method to cancel function calls, and a flush method to immediately execute
+the delayed function).
+3.
