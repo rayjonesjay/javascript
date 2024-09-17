@@ -24,23 +24,27 @@ async function read(){
 	let files = await readdir(path); // convert path to absolute
 
 	// sort the names aphabetically
-	files = files.sort(greater)
+	// files = files.sort(greate)
 	let newData = [];
 	for(let jsonName of files){
 		newData.push(splitName(jsonName))
 	}
 
 	let count = 1;
+	newData = newData.sort()
 	for(let name of newData) {
-		let format = `${count}. ${name[0]} ${name[1]}`
+		let formattedName = name.sort(greate).join(' ')
+		let format = `${count}. ${formattedName}`
 		console.log(format)
 		count++
 	}
 }
 
-
-function greater(a,b){
-	return a < b;
+function greate(a,b){
+	return a > b;
 }
-console.log(read())
-// console.log(splitName("Alice_john.json"))
+
+// console.log(read())
+// console.log(splitName("Alice_Ab.json").sort(greate))
+
+read().then()
