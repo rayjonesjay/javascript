@@ -5,3 +5,42 @@ The output must print one guest per line, in ascending alphabetical order, and f
 Number. LastName FirstName *starting from 1*
 
  */
+// Alice_John.json -> Alice John
+import { readdir } from 'node:fs/promises'
+import { resolve } from 'node:path'
+function splitName(str) {
+	let name = str.slice(0,-5).split('_')
+	return name 
+}
+
+async function read(){
+	let dir = '.'
+	const args = process.argv.slice(2)
+
+	if(args.length != 0){
+		 dir = args[0]
+	}
+	let path = resolve(dir)
+	let files = await readdir(path); // convert path to absolute
+
+	// sort the names aphabetically
+	files = files.sort(greater)
+	let newData = [];
+	for(let jsonName of files){
+		newData.push(splitName(jsonName))
+	}
+
+	let count = 1;
+	for(let name of newData) {
+		let format = `${count}. ${name[0]} ${name[1]}`
+		console.log(format)
+		count++
+	}
+}
+
+
+function greater(a,b){
+	return a < b;
+}
+console.log(read())
+// console.log(splitName("Alice_john.json"))
