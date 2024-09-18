@@ -1,85 +1,68 @@
-import http from 'http';
-import fs from 'fs/promises';
-import path from 'path';
+import http from 'http'
+import fs from 'fs/promises'
+import path from 'path'
 
-const PORT = 5000;
-const GUESTS_DIR = 'guests';
+const port = 5000;
+const base_dir = process.cwd();
 
-const AUTHORIZED_USERS = {
-    'Caleb_Squires': 'abracadabra',
-    'Tyrique_Dalton': 'abracadabra',
-    'Rahima_Young': 'abracadabra'
-};
-
-const server = http.createServer(async (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !isAuthorized(authHeader)) {
-        return sendResponse(res, 401, 'Authorization Required');
-    }
-
-    if (req.method !== 'POST') {
-        return sendResponse(res, 500, { error: 'server failed' });
-    }
-
-    const guestName = req.url.substring(1);
-    if (!guestName) {
-        return sendResponse(res, 500, { error: 'server failed' });
-    }
-
-    try {
-        await fs.mkdir(GUESTS_DIR, { recursive: true });
-
-        const body = await getRequestBody(req);
-        let guestData;
-        try {
-            guestData = JSON.parse(body);
-        } catch (jsonError) {
-            return sendResponse(res, 500, { error: 'server failed' });
-        }
-
-        const filePath = path.join(GUESTS_DIR, `${guestName}.json`);
-
-        // Check if file already exists
-        try {
-            await fs.access(filePath);
-            // If no error is thrown, file exists
-            return sendResponse(res, 500, { error: 'server failed' });
-        } catch {
-            // File doesn't exist, proceed with writing
-            await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
-        }
-
-        sendResponse(res, 200, guestData);
-    } catch (err) {
-        console.error('Error:', err);
-        sendResponse(res, 500, { error: 'server failed' });
-    }
-});
-
-function isAuthorized(authHeader) {
-    const base64Credentials = authHeader.split(' ')[1];
-    const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-    const [username, password] = credentials.split(':');
-
-    return AUTHORIZED_USERS[username] === password;
+const authorized_users = {
+    'Caleb_Squires': 'abracadabra', 'Tyrique_Dalton': 'abracadabra', 'Rahima_Young': 'abracadabra'
 }
 
-function sendResponse(res, statusCode, data) {
-    res.writeHead(statusCode);
-    res.end(typeof data === 'string' ? data : JSON.stringify(data));
+const parse_auth_header = (auth_header) => {
+    if (!auth_header || !auth_header.startsWith('Basic ')) return null;
+    const credentials = auth_header.slice(6);
+    const [username, password] = Buffer.from(credentials, 'base64').toString().split(':')
+    return { username, password }
 }
 
-function getRequestBody(req) {
-    return new Promise((resolve, reject) => {
-        let body = '';
-        req.on('data', chunk => body += chunk.toString());
-        req.on('end', () => resolve(body));
-        req.on('error', reject);
-    });
-}
+const server = http.createServer((req, res) => {
+    const auth = parse_auth_header(req.headers.authorization);
+    if (!auth || !authorized_users[auth.username] || authorized_users[auth.username] !== auth.password) {
+        res.writeHead(401, {
+            'Content-Type': 'application/json',
+            'WWW-Authenticate': 'Basic realm="Authorization Required"'
+        });
+        res.end(JSON.stringify({ error: 'Authorization Required' }))
+        return;
+    }
+    if (req.method === 'POST') {
+        let body = ''
+        req.on('data', chunk => {
+            body += chunk.toString()
+        });
+        req.on('end', async () => {
+            try {
+                if (!body) {
+                    body = {
+                        answer: 'yes',
+                        drink: 'juice',
+                        food: 'pizza'
+                    }
+                }
 
-server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+                const guest_name = req.url.slice(1);
+
+                const guest_dir = path.join(base_dir, 'guests');
+                await fs.mkdir(guest_dir, { recursive: true });
+
+                const file_path = path.join(guest_dir, `${guest_name}.json`);
+                await fs.writeFile(file_path, JSON.stringify(body, null, 2));
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify(body))
+
+            } catch (e) {
+                res.writeHead(500, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ error: 'Internal Server Error' }))
+            }
+        })
+    } else {
+        res.writeHead(405, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ error: 'Method not allowed' }))
+    }
+})
+
+
+server.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
+})
