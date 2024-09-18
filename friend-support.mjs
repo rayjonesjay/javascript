@@ -1,44 +1,45 @@
 import http from 'http';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import fs from 'fs';
+import path from 'path';
 
-// Define __dirname in an ES module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const PORT = 5000;
 
-const server = http.createServer(async (req, res) => {
-    // Extract guest name from the URL
+// Create an HTTP server
+const server = http.createServer((req, res) => {
     const guestName = req.url.slice(1); // Remove leading '/'
+    const filePath = path.join(process.cwd(), 'guests', `${guestName}.json`);
 
-    if (!guestName) {
-        res.writeHead(400, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({ error: 'guest not specified' }));
-        return;
-    }
+    // Set response header for JSON
+    res.setHeader('Content-Type', 'application/json');
 
-    try {
-        // Construct the file path based on the guest name
-        const filePath = join(__dirname, 'guests', `${guestName}.json`);
-        const data = await readFile(filePath, 'utf-8');
-
-        // Respond with the guest's JSON data
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(data);
-    } catch (err) {
-        if (err.code === 'ENOENT') {
-            // Guest not found
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'guest not found' }));
-        } else {
-            // Server error
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'server failed' }));
-        }
+    // Handle GET requests
+    if (req.method === 'GET') {
+        // Try to read the guest file
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                if (err.code === 'ENOENT') {
+                    // File not found
+                    res.writeHead(404);
+                    res.end(JSON.stringify({ error: 'guest not found' }));
+                } else {
+                    // Server error
+                    res.writeHead(500);
+                    res.end(JSON.stringify({ error: 'server failed' }));
+                }
+            } else {
+                // File found, return its content
+                res.writeHead(200);
+                res.end(data);
+            }
+        });
+    } else {
+        // Method not allowed
+        res.writeHead(405);
+        res.end(JSON.stringify({ error: 'Method not allowed' }));
     }
 });
 
-// Listen on port 5000
-server.listen(5000, () => {
-    console.log('Server is listening on port 5000');
+// Start the server and listen on port 5000
+server.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
